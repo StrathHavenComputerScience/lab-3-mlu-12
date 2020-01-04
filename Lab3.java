@@ -1,4 +1,3 @@
-
 public class Lab3
 {
     public static void testLightCandles1()
@@ -120,6 +119,8 @@ public class Lab3
     }
 
     public static void CompleteSide()
+    //precondition: Robot is at the beginning of one side of the Room
+    //postcondition: Robot is at the end of the side of the Room, having darkened all possible squares in the wall
     {
         IfNextToLightSpace();
         IfNextToLightSpace();
@@ -129,6 +130,8 @@ public class Lab3
     }
     
     public static void EndofLine()
+    //precondition: Robot is in a corner of the Room
+    //postcondition: Robot has made the square to its left dark or is ready to test the next side of the Room
     {
         if(IsNextToLightSpace())
         {
@@ -154,6 +157,8 @@ public class Lab3
     }
     
     public static void IfNextToLightSpace()
+    //precondition: Robot has a square on the left that may be a light space
+    //postcondition: Robot has either darkened the space or left the square and moved to the next square
     {
         if(IsNextToLightSpace())
         {
@@ -183,6 +188,8 @@ public class Lab3
     }
     
     public static boolean IsNextToLightSpace()
+    //precondition: Robot has a square to the left that could be a light space
+    //postcondition: Robot has verified square to the left is a light space
     {
         Robot.turnLeft();
         if(Robot.frontIsClear())
@@ -223,9 +230,121 @@ public class Lab3
     //Complete this method.  You will need to write additional helper methods.
     public static void swapAll()
     {
-        //insert instructions below
-
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        switchRow();
+        LeftDark();
     }
+    
+    public static void switchRow()
+    //precondition: Robot is ready to switch the two colors to its sides
+    //postcondition: Robot has switched or left the colors unchanged, and moved to the next row
+    {
+        LeftDark();
+        Robot.move();
+    }
+    
+    public static void LeftDark()
+    //precondition: the Robot is ready to switch the two colors to its sides
+    //postcondition: the Robot has either switched the two colors or kept them the same
+    {
+        if (leftDark())
+        {
+            moveOpposite();
+            if (rightDark())
+            {
+                Robot.turnLeft();
+                Robot.turnLeft();
+                Robot.move();
+                Lab2.turnRight();
+            }
+            else
+            {
+                Robot.makeDark();
+                moveOpposite();
+                Robot.makeLight();
+                Robot.turnLeft();
+                Robot.turnLeft();
+                Robot.move();
+                Robot.turnLeft();
+            }
+        }
+        else
+        {
+            LeftLight();
+        }
+    }
+    
+    public static void LeftLight()
+    //precondition: the square to Robot's left is light
+    //postcondition: the square to Robot's right is now unchanged or light
+    {
+        moveOpposite();
+            if(!rightDark())
+            {
+                Robot.turnLeft();
+                Robot.turnLeft();
+                Robot.move();
+                Lab2.turnRight();
+            }
+            else
+            {
+                Robot.makeLight();
+                moveOpposite();
+                Robot.makeDark();
+                Robot.turnLeft();
+                Robot.turnLeft();
+                Robot.move();
+                Robot.turnLeft();
+            }
+    }
+    
+    public static void moveOpposite()
+    //precondition: Robot is on the left/right side of the path
+    //postcondition: Robot has moved to the right/left side of the path
+    {
+        Robot.turnLeft();
+        Robot.turnLeft();
+        Robot.move();
+        Robot.move();
+        }
+    
+    public static boolean rightDark()
+    //precondition: the square, on the right side, that Robot is on may be Dark
+    //postcondition: Robot knows whether or not the square it is on is Dark
+    {
+        if(Robot.onDark())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static boolean leftDark()
+    //precondition: the square to Robot's left may or may not be Dark
+    //postcondition: Robot knows whether or not the square to its left is Dark
+    {
+        Robot.turnLeft();
+        Robot.move();
+        if(Robot.onDark())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     //Don't run these. I will!
     public static void testLightCandles3()
     {
