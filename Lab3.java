@@ -1,3 +1,4 @@
+
 public class Lab3
 {
     public static void testLightCandles1()
@@ -112,10 +113,98 @@ public class Lab3
     //Complete this method.  You will need to write additional helper methods.
     public static void completeRoom()
     {
-        //insert instructions below
-
+        CompleteSide();
+        CompleteSide();
+        CompleteSide();
+        CompleteSide();
     }
-    //Run this method to test swapAll on map swap1.txt
+
+    public static void CompleteSide()
+    {
+        IfNextToLightSpace();
+        IfNextToLightSpace();
+        IfNextToLightSpace();
+        IfNextToLightSpace();
+        EndofLine();
+    }
+    
+    public static void EndofLine()
+    {
+        if(IsNextToLightSpace())
+        {
+        Robot.makeDark();
+        Robot.turnLeft();
+        Robot.turnLeft();
+        Robot.move();
+        }
+        else
+        {
+            if(!Robot.onDark())
+            {
+        Lab2.turnRight();
+        Lab2.turnRight();
+        }
+        if(Robot.onDark())
+        {
+            Robot.turnLeft();
+            Robot.turnLeft();
+            Robot.move();
+        }
+    }
+    }
+    
+    public static void IfNextToLightSpace()
+    {
+        if(IsNextToLightSpace())
+        {
+        Robot.makeDark();
+        Robot.turnLeft();
+        Robot.turnLeft();
+        Robot.move();
+        Robot.turnLeft();
+        Robot.move();
+        }
+        else
+        {
+            if(!Robot.onDark())
+            {
+        Lab2.turnRight();
+        Robot.move();
+        }
+        else
+        {
+            Robot.turnLeft();
+            Robot.turnLeft();
+            Robot.move();
+            Robot.turnLeft();
+            Robot.move();
+        }
+    }
+    }
+    
+    public static boolean IsNextToLightSpace()
+    {
+        Robot.turnLeft();
+        if(Robot.frontIsClear())
+           
+        {
+          Robot.move();
+            if(!Robot.onDark())
+            {
+            return true;
+            }
+            else
+            {
+                return false;
+            }  
+            }
+            else
+            {
+                return false;
+            }
+    }
+
+//Run this method to test swapAll on map swap1.txt
     public static void testSwapAll1()
     {
         Robot.load("swap1.txt");
